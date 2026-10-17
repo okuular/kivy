@@ -6,12 +6,19 @@ from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 from kivy.core.window import Window
 from kivy.uix.scrollview import ScrollView
+from kivy.uix.image import Image
  
 from instructions import txt_instruction, txt_test1, txt_test2, txt_test3, txt_sits
 from ruffier import test
 
 from seconds import Seconds
- 
+
+Window.clearcolor = (.99, .98, .87, 1)
+text_color = (.15, .21, .09, 1)
+text_secondary_color = (.99, .98, .87, 1)
+btn_color = (.37, .42, .21, 1)
+btn_secondary_color = (.8, .83, .68, 1)
+
 age = 7
 name = ""
 p1, p2, p3 = 0, 0, 0
@@ -26,8 +33,16 @@ def check_int(str_num):
 class InstrScr(Screen):
    def __init__(self, **kwargs):
        super().__init__(**kwargs)
- 
-       instr = Label(text=txt_instruction)
+
+        #from kivy.uix.image import Image
+       header = Image(source='kardio.png',
+                      keep_ratio=True,
+                      size_hint_x=1,
+                      pos_hint={'x': 0, 'y': 0},
+                      allow_stretch=True)
+        #outer.add_widget(header)
+
+       instr = Label(text=txt_instruction, color=text_color, font_size='16sp')
  
        lbl1 = Label(text='Введите имя:', halign='right')
        self.in_name = TextInput(multiline=False)
@@ -45,6 +60,7 @@ class InstrScr(Screen):
        line2.add_widget(self.in_age)
  
        outer = BoxLayout(orientation='vertical', padding=8, spacing=8)
+       outer.add_widget(header)
        outer.add_widget(instr)
        outer.add_widget(line1)
        outer.add_widget(line2)
@@ -68,7 +84,7 @@ class PulseScr(Screen):
       
        instr = Label(text=txt_test1)
        #lbl1 = Label(text='Считайте пульс')
-       self.lbl_sec = Seconds(15)
+       self.lbl_sec = Seconds(15, color=text_color, font_size='75sp')
        self.lbl_sec.bind(done=self.sec_finished)
 
        line = BoxLayout(size_hint=(0.8, None), height='30sp')
